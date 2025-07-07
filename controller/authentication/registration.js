@@ -1,50 +1,53 @@
-//Import some libraries and functions
-const model=require("../../models/authentication/roleAuthentication");
-const bcrypt=require("bcryptjs");//bcrypt is used for hashing the password
+const model = require("../../models/authentication/roleAuthentication");
+const bcrypt = require("bcryptjs");
 
-//Make functions for controlling buttons
-const register=async(req,res)=>{
-  //create variable
- const {name,email,password,role,code}=req.body;
+const register = async (req, res) => {
+  const { name, email, password, role, code } = req.body;
 
- //handle errors using try catch
- try{
- //  change user role
-  let userRole='student';
+  try {
+    console.log("Registration request:", req.body); // optional for debugging
 
-  if(role=='admin' && code==process.env.ADMIN_KEY)
-    userRole='admin';
+    // Set user role
+    let userRole = "student";
+    if (role === "admin" && code === process.env.ADMIN_KEY) userRole = "admin";
+    if ((role === "hod" && code === process.env.HOD_KEY_CSE) || (role === "hod" && code === process.env.HOD_KEY_ECE)) userRole = "hod";
+    if ((role === "teacher" && code === process.env.TEACHER_KEY_CSE) || (role === "teacher" && code === process.env.TEACHER_KEY_ECE)) userRole = "teacher";
 
-  if((role=='hod' && code==process.env.HOD_KEY_CSE) || (role=='hod' && code==process.env.HOD_KEY_ECE))
-    userRole='hod'; 
+    // Check if email already exists
+    const existingEmail = await model.findOne({ email });
+    if (existingEmail) {
+      return res.status(400).json({
+        success: false,
+        message: "User Already Registered"
+      });
+    }
 
-  if((role=='teacher' && code==process.env.TEACHER_KEY_CSE) || (role=='teacher' && code==process.env.TEACHER_KEY_ECE))
-    userRole='teacher';
+    // Hash password
+    const hashPassword = await bcrypt.hash(password, 10);
 
-  //checking email is exist or not
-  const existingEmail=await model.findOne({email});
-  if(existingEmail)
-    return res.status(400).json({message:"User Already Registered"});
- 
-  //hash the password for security of password
-  const hashPassword=await bcrypt.hash(password,10)//10 is salt it means number of times password hasing process is continuing
+    // Save user
+    const User = model({
+      name,
+      email,
+      password: hashPassword,
+      role: userRole,
+      code
+    });
 
-  //fill data into model
-  const User=model({
-    name,
-    email,
-    password:hashPassword,
-    role:userRole,
-    code,
-  });
+    await User.save();
 
-  //save the model
-  await User.save();
-  res.status(200).json({message:"Registration Successfull"});
-  }catch(err){
-    return(
-      res.status(400).json({message:"SomeThing went Wrong"})
-    );
+    res.status(200).json({
+      success: true,
+      message: "Registration Successful"
+    });
+
+  } catch (err) {
+    console.error("Registration error:", err);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong during registration"
+    });
   }
-}
-module.exports=register;
+};
+
+module.exports = register;
