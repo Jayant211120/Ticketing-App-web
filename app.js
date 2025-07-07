@@ -13,6 +13,7 @@ db();
 //json
 app.use(express.json());
 
+app.set('trust proxy', 1);
 //create middlwares
 app.use("/api/auth",routes);
 
