@@ -9,7 +9,7 @@ const sendEmail=async(email,message,text)=>{
       service:"gmail",
       auth:{
         user:process.env.EMAIL_USER,
-        pass:process.env.EMAIL_pass,
+        pass:process.env.EMAIL_PASS,
       }
     });
     //SendMail is used for sending mail

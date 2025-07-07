@@ -33,7 +33,8 @@ const otpSend=async(req,res)=>{
   await sendEmail(email,"Check Email",`Your OTP is:${otp}`);
   res.status(200).json({message:"OTP Send Successfully"}); 
  }catch(err){
-  res.status(400).json({message:"Something went wrong in otpSend"});
+  console.log(err);
+  res.status(400).json({message:"Something went wrong in otpSend",error});
  }
 }
 

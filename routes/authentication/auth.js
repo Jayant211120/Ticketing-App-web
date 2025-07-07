@@ -30,7 +30,7 @@ router.post("/resetPassword", resetPassword);
 // Protected Route (example)
 router.get(
   "/fetch",
-  tokenVerification,
+ tokenVerification,
   roleVerification("admin", "teacher", "hod", "student"),
   fetchData
 );
