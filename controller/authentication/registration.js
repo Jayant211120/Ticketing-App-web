@@ -40,7 +40,7 @@ const register=async(req,res)=>{
 
   //save the model
   await User.save();
-  res.status(200).json("Registration Successfull");
+  res.status(200).json({message:"Registration Successfull"});
   }catch(err){
     return(
       res.status(400).json({message:"SomeThing went Wrong"})
