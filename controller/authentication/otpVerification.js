@@ -34,7 +34,7 @@ const otpVerification=async(req,res)=>{
   //save the mail
   await existingEmail.save();
   
-  res.status(400).json({message:"Email Verified"});
+  res.status(200).json({message:"Email Verified"});
   }catch(err){
     return res.status(500).json({
     message: "Something went wrong in otpVerification"
