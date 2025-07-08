@@ -29,7 +29,7 @@ const login=async(req,res)=>{
  existingEmail.token=token;
  existingEmail.save();
  //save the token in database
- res.json({message:"Login Successfully",token})
+ res.json({message:"Login Successfully",token,name:existingEmail.name,role:existingEmail.role})
  }catch(err){
   res.status(400).json({message:"Something went wrong"});
  }
