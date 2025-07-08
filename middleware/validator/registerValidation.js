@@ -25,6 +25,10 @@ exports.registerValidation = [
     .notEmpty().withMessage("Role is required"),
 
   // Code
-  body("code")
-    .notEmpty().withMessage("Code is required"),
+  body("code").custom((value, { req }) => {
+      if (req.body.role !== 'student' && (!value || value.trim() === "")) {
+        throw new Error("Code is required for non-student roles");
+      }
+      return true;
+    })
 ];

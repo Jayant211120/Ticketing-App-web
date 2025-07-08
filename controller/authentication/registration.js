@@ -9,9 +9,12 @@ const register = async (req, res) => {
 
     // Set user role
     let userRole = "student";
-    if (role === "admin" && code === process.env.ADMIN_KEY) userRole = "admin";
-    if ((role === "hod" && code === process.env.HOD_KEY_CSE) || (role === "hod" && code === process.env.HOD_KEY_ECE)) userRole = "hod";
-    if ((role === "teacher" && code === process.env.TEACHER_KEY_CSE) || (role === "teacher" && code === process.env.TEACHER_KEY_ECE)) userRole = "teacher";
+    if (role === "admin" && code === process.env.ADMIN_KEY) 
+      userRole = "admin";
+    if ((role === "hod" && code === process.env.HOD_KEY_CSE) || (role === "hod" && code === process.env.HOD_KEY_ECE)) 
+      userRole = "hod";
+    if ((role === "teacher" && code === process.env.TEACHER_KEY_CSE) || (role === "teacher" && code === process.env.TEACHER_KEY_ECE)) 
+      userRole = "teacher";
 
     // Check if email already exists
     const existingEmail = await model.findOne({ email });
@@ -31,7 +34,6 @@ const register = async (req, res) => {
       email,
       password: hashPassword,
       role: userRole,
-      code
     });
 
     await User.save();
