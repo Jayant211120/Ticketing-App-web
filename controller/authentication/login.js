@@ -22,14 +22,14 @@ const login=async(req,res)=>{
 
  //generate token for save data in browser
  const token=jwt.sign(
-  {id:existingEmail._id,role:existingEmail.role},
+  {id:existingEmail._id,email:existingEmail.email,role:existingEmail.role},
   process.env.JWT_KEY,
   {expiresIn:"2d"}
  );
  existingEmail.token=token;
- existingEmail.save();
  //save the token in database
- res.json({message:"Login Successfully",token,name:existingEmail.name,role:existingEmail.role})
+ existingEmail.save();
+ res.json({success:true,message:"Login Successfully",token,name:existingEmail.name,role:existingEmail.role})
  }catch(err){
   res.status(400).json({message:"Something went wrong"});
  }

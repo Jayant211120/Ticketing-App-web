@@ -1,1 +1,0 @@
-//problem is solved or not (I mean ticking problem generation are solved or not its pending or success).

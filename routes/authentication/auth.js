@@ -9,7 +9,6 @@ const verifyOtp = require("../../controller/authentication/otpVerification");
 const resendOtp = require("../../controller/authentication/otpResend");
 const forgotPassword = require("../../controller/authentication/forgotPassword");
 const resetPassword = require("../../controller/authentication/resetPassword");
-const fetchData = require("../../controller/ticketOperations/fetch");
 
 // Middlewares
 const otpLimiter = require("../../middleware/limiter/otpLimiter");
@@ -26,13 +25,5 @@ router.post('/verifyOtp', verifyOtp);
 router.post('/resendOtp', otpLimiter, resendOtp);
 router.post('/forgotPassword', forgotPassword);
 router.post("/resetPassword", resetPassword);
-
-// Protected Route (example)
-router.get(
-  "/fetch",
- tokenVerification,
-  roleVerification("admin", "teacher", "hod", "student"),
-  fetchData
-);
 
 module.exports = router;
