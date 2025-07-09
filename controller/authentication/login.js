@@ -1,37 +1,59 @@
-//Import some libraries and functions
-const model=require("../../models/authentication/roleAuthentication");
-const bcrypt=require("bcryptjs");//bcrypt is used for hashing the password
-const jwt=require("jsonwebtoken");//jsonwebtoken is used for generating token
+// Import required libraries
+const model = require("../../models/authentication/roleAuthentication");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
-//Make functions for controlling buttons
-const login=async(req,res)=>{
- //create some variables
- const{email,password}=req.body;
+// Login controller function
+const login = async (req, res) => {
+  const { email, password } = req.body;
 
- //user try catch for handling errors
- try{
- //check user email already registered or not
- const existingEmail=await model.findOne({email});
- if(!existingEmail)
-  return res.status(400).json({message:"User Not Registered"});
+  try {
+    // Check if user exists
+    const existingEmail = await model.findOne({ email });
+    if (!existingEmail)
+      return res.status(400).json({ message: "User Not Registered" });
 
- //compare password
- const compare=await bcrypt.compare(password,existingEmail.password);
- if(!compare)
-  return res.status(400).json({message:"Invalid Credentials"});
+    // Validate password
+    const compare = await bcrypt.compare(password, existingEmail.password);
+    if (!compare)
+      return res.status(400).json({ message: "Invalid Credentials" });
 
- //generate token for save data in browser
- const token=jwt.sign(
-  {id:existingEmail._id,email:existingEmail.email,role:existingEmail.role},
-  process.env.JWT_KEY,
-  {expiresIn:"2d"}
- );
- existingEmail.token=token;
- //save the token in database
- existingEmail.save();
- res.json({success:true,message:"Login Successfully",token,name:existingEmail.name,role:existingEmail.role})
- }catch(err){
-  res.status(400).json({message:"Something went wrong"});
- }
-}
-module.exports=login;
+    // Generate JWT token
+    const token = jwt.sign(
+      {
+        id: existingEmail._id,
+        email: existingEmail.email,
+        role: existingEmail.role,
+      },
+      process.env.JWT_KEY,
+      { expiresIn: "2d" }
+    );
+
+    // Save token to user object
+    existingEmail.token = token;
+    await existingEmail.save();
+
+    // Convert Mongoose document to plain object
+    const user = existingEmail.toObject();
+
+    // Send proper response
+    res.json({
+      success: true,
+      message: "Login Successfully",
+      token,
+      name: user.name,
+      role: user.role,
+    });
+
+    console.log("✅ Login success:", {
+      email: user.email,
+      role: user.role,
+    });
+
+  } catch (err) {
+    console.error("❌ Login error:", err.message);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+module.exports = login;
