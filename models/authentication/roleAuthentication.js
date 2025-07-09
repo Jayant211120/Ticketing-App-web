@@ -15,9 +15,9 @@ const mongoose=require("mongoose");
       type:String,
     },
     role:{
-      type:String,
-      enum:['admin','hod','teacher','student'],
-      default:'student',
+     type: String,
+     required: true,
+     enum: ["admin", "teacher", "hod", "student"],
     },
     token:{type:String}
   },{timestamp:true});
