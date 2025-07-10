@@ -24,7 +24,7 @@ const generate=mongoose.Schema({
   },
   role:{
     type:String,
-    enum:['admin','hod','techer','student'],
+    enum:['admin','hod','teacher','student'],
     default:'student',
     required:true,
   },
@@ -40,17 +40,11 @@ const generate=mongoose.Schema({
     type:String,
     required:true,
   },
-  status:{
-    type:String,
-  },
   problemRaised:{
-    type:Date
+    type:String,
+    required:true
   },
-  problemSolved:{
-    type:Date,
-  }
-
-},{timestamp:true});
+},{timestamps:true});
 
 module.exports=mongoose.model("generateTicket",generate,"generateTicket");
 console.log("generate Ticket are created successfully");

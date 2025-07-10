@@ -1,6 +1,6 @@
 const generateModel = require("../../../models/operations/generateTicket");
 const authModel = require("../../../models/authentication/roleAuthentication");
-
+const moment=require('moment');
 const generateTicket = async (req, res) => {
   try {
     // ✅ Step 1: Get user info from login (token middleware)
@@ -20,6 +20,7 @@ const generateTicket = async (req, res) => {
     const { name, mobileNumber, course, department, roomNumber, problemHeading, problemDetails } = req.body;
 
     // ✅ Step 4: Create new ticket — user can create multiple
+    const now =moment().format("ddd MMM DD YYYY hh:mm:ss A");
     const ticket = new generateModel({
       name,
       email: existingUser.email,       // 💡 always use logged-in email
@@ -30,7 +31,7 @@ const generateTicket = async (req, res) => {
       roomNumber,
       problemHeading,
       problemDetails,
-      problemRaised: new Date(),
+      problemRaised:now,
     });
 
     await ticket.save();
