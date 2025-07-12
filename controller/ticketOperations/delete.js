@@ -1,4 +1,4 @@
-const ticketModel = require("../../../models/operations/generateTicket");
+const ticketModel = require("../../models/operations/generateTicket");
 
 const remove = async (req, res) => {
   const { id } = req.params;

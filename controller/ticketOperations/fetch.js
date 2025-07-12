@@ -1,4 +1,4 @@
-const ticktingModel = require("../../../models/operations/generateTicket");
+const ticktingModel = require("../../models/operations/generateTicket");
 
 const fetchData = async (req, res) => {
   try {

@@ -1,5 +1,5 @@
-const generateModel = require("../../../models/operations/generateTicket");
-const authModel = require("../../../models/authentication/roleAuthentication");
+const generateModel = require("../../models/operations/generateTicket");
+const authModel = require("../../models/authentication/roleAuthentication");
 const moment=require('moment');
 const generateTicket = async (req, res) => {
   try {

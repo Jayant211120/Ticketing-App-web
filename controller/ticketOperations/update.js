@@ -1,4 +1,4 @@
-const ticketModel = require("../../../models/operations/generateTicket");
+const ticketModel = require("../../models/operations/generateTicket");
 const moment = require("moment"); // For converting date to human-readable format
 
 const update = async (req, res) => {

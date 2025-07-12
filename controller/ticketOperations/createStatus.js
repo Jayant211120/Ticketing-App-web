@@ -1,5 +1,5 @@
-const statusModel = require("../../../models/operations/status");
-const generateTicket = require("../../../models/operations/generateTicket");
+const statusModel = require("../../models/operations/status");
+const generateTicket = require("../../models/operations/generateTicket");
 const moment = require("moment");
 
 const createStatus = async (req, res) => {

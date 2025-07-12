@@ -1,11 +1,11 @@
 const tokenVerify=require("../../middleware/authentication/tokenVerification");
-const generateTicket=require("../../controller/ticketOperations/student/create");
-const checkComplaints=require("../../controller/ticketOperations/student/fetch");
-const removeComplaints=require("../../controller/ticketOperations/student/delete");
-const updateComplaints=require("../../controller/ticketOperations/student/update");
-const getStatus=require("../../controller/ticketOperations/student/getStatus");
-const updateStatus=require("../../controller/ticketOperations/student/updateStatus");
-const createStatus=require("../../controller/ticketOperations/student/createStatus");
+const generateTicket=require("../../controller/ticketOperations/create");
+const checkComplaints=require("../../controller/ticketOperations/fetch");
+const removeComplaints=require("../../controller/ticketOperations/delete");
+const updateComplaints=require("../../controller/ticketOperations/update");
+const getStatus=require("../../controller/ticketOperations/getStatus");
+const updateStatus=require("../../controller/ticketOperations/updateStatus");
+const createStatus=require("../../controller/ticketOperations/createStatus");
 const roleVerification=require("../../middleware/authentication/roleVerification");
 
 const express=require("express");

@@ -1,5 +1,5 @@
-const ticketModel = require("../../../models/operations/generateTicket");
-const statusModel = require("../../../models/operations/status");
+const ticketModel = require("../../models/operations/generateTicket");
+const statusModel = require("../../models/operations/status");
 
 const getUserStats = async (req, res) => {
   try {

@@ -1,4 +1,4 @@
-const statusModel = require("../../../models/operations/status");
+const statusModel = require("../../models/operations/status");
 const moment=require("moment");
 const updateStatus = async (req, res) => {
   const { id } = req.params; // this is ticketId
